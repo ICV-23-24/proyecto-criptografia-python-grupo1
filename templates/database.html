@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% block title %}
+Página Prueba
+{% endblock %}
+{% block content %}
+
+<h1>Aquí puedes cargar y descargar líbremente, claves públicas y privadas.</h1>
+<div class="equally">
+
+    <div class="downloader halft_width inline-block">
+        <h3>Descarga de claves</h3>
+        <select></select>
+        <button> Descargar archivo </button>
+    </div>
+    <div class="uploader halft_width inline-block">
+        <h3>Carga de claves</h3>
+        <input type="text" placeholder="Key Identifier">
+        <input type="file" name="" id="">
+        <button> Cargar archivo </button>
+    </div>
+
+</div>
+
+<h1>No tienes una clave privada ni pública? Genera una aquí.</h1>
+<form method="post">
+    <input type="hidden" name="mode" value="generate">
+    <button type="submit">Generate New Keys</button>
+</form>
+
+{% endblock %}

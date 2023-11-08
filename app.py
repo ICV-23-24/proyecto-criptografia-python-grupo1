@@ -26,6 +26,21 @@ def csimetrico():
 
     return render_template("csimetrico.html")
 
+
+# Database route, here users can log public keys, or download them to re-import them anywhere.
+@app.route("/database/", methods=['GET','POST'])
+def database():
+    #Si se genera una petición POST, con el modo de 'generar', entonces genera una clave pública y privada nuevas.
+    if request.method == 'POST':
+        # Get the formulary mode, 'generate' means the user needs new keys.
+        mode = request.form['mode']
+        if mode == "generate":
+            f.generate_keys()
+
+
+    return render_template("database.html")
+
+
 @app.route("/casimetrico/")
 def casimetrico():
     return render_template("casimetrico.html")
@@ -39,9 +54,7 @@ def about():
 def doc():
     return render_template("doc.html")
 
-@app.route("/otro/")
-def otro():
-    return render_template("otro.html")
+
 
 
 

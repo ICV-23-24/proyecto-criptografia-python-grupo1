@@ -65,3 +65,30 @@ footer {
 .task-item {
     margin-bottom: 5px;
 }
+
+
+/*
+
+    Here is some CSS for the database page.
+
+*/
+
+.equally{
+    width: 100%;
+    display: inline-block;
+    text-align: center;
+}
+
+.inline-block{
+    display: inline-block;
+}
+
+.halft_width{
+    width: 48%;
+    padding: 10px;
+    border-top: black solid 2px;
+}
+
+.uploader{
+    border-left: black solid 1px;
+}
