@@ -1,6 +1,9 @@
 from datetime import datetime
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, send_file
 import functions as f
+import zipfile
+import os
+
 
 app = Flask(__name__)
 
@@ -27,15 +30,30 @@ def csimetrico():
     return render_template("csimetrico.html")
 
 
-# Database route, here users can log public keys, or download them to re-import them anywhere.
+# Database route, aquí los usuarios pueder importar y exportar claves públicas, .
 @app.route("/database/", methods=['GET','POST'])
 def database():
     #Si se genera una petición POST, con el modo de 'generar', entonces genera una clave pública y privada nuevas.
     if request.method == 'POST':
-        # Get the formulary mode, 'generate' means the user needs new keys.
+        # Obtén el modo del formulario, 'generate' significa que el usuario necesita un nuevo par de claves.
         mode = request.form['mode']
         if mode == "generate":
+            print("Generando claves...")
             f.generate_keys()
+
+            #public file path
+            publicFile = os.path.join("static","temp","public_key.key")
+            #private file path
+            privateFile = os.path.join("static","temp","private_key.key")
+
+            # Creamos un .zip para contener ambos archivos....
+            zipFile = "static/temp/keys.zip"
+            with zipfile.ZipFile(zipFile, "w", zipfile.ZIP_DEFLATED) as zipf:
+                zipf.write(publicFile,"public_key.key")
+                zipf.write(privateFile,"private_key.key")
+
+            # Enviamos a descargar las claves.
+            return send_file(zipFile, as_attachment=True, download_name="keys.zip", mimetype="application/zip")
 
 
     return render_template("database.html")
