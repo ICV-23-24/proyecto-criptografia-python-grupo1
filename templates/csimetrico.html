@@ -8,7 +8,7 @@ C. Simétrico
     <h2>Encriptar Mensaje</h2>
     <form method="post">
         <label for="message">Mensaje:</label><br>
-        <input type="text" id="message" name="message"><br><br>
+        <input type="file" id="file_path" name="message"><br><br>
         <label for="key">Clave:</label><br>
         <input type="text" id="key" name="key"><br><br>
         <input type="hidden" name="mode" value="encrypt">
@@ -23,7 +23,7 @@ C. Simétrico
     <h2>Desencriptar Mensaje</h2>
     <form method="post">
         <label for="encrypted_message">Mensaje Encriptado:</label><br>
-        <input type="text" id="encrypted_message" name="message"><br><br>
+        <input type="file" id="encrypted_message" name="message"><br><br>
         <label for="key_decrypt">Clave:</label><br>
         <input type="text" id="key_decrypt" name="key"><br><br>
         <input type="hidden" name="mode" value="decrypt">

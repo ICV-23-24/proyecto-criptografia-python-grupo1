@@ -13,15 +13,15 @@ def home():
 @app.route("/csimetrico/", methods=['GET','POST'])
 def csimetrico():
     if request.method == 'POST':
-        message = request.form['message']
+        file_path = request.form['file_path']
         key = request.form['key']
         mode = request.form['mode']
 
         if mode == 'encrypt':
-            encrypted_message = f.encrypt_message(message, key)
+            encrypted_message = f.encrypt_file(file_path, key)
             return render_template('csimetrico.html', encrypted_message=encrypted_message, mode=mode)
         elif mode == 'decrypt':
-            decrypted_message = f.decrypt_message(message, key)
+            decrypted_message = f.decrypt_file(encrypted_message, key)
             return render_template('csimetrico.html', decrypted_message=decrypted_message, mode=mode)
 
     return render_template("csimetrico.html")
