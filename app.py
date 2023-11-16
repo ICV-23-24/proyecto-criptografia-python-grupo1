@@ -1,5 +1,5 @@
 from datetime import datetime
-from flask import Flask, render_template, request
+from flask import Flask, jsonify, render_template, request, send_file
 import functions as f
 
 app = Flask(__name__)
@@ -10,21 +10,28 @@ app = Flask(__name__)
 def home():
     return render_template("home.html")
 
-@app.route("/csimetrico/", methods=['GET','POST'])
+@app.route("/csimetrico/", methods=['GET', 'POST'])
 def csimetrico():
+    print(request.method)
     if request.method == 'POST':
-        file_path = request.form['file_path']
-        key = request.form['key']
-        mode = request.form['mode']
-
-        if mode == 'encrypt':
-            encrypted_message = f.encrypt_file(file_path, key)
-            return render_template('csimetrico.html', encrypted_message=encrypted_message, mode=mode)
-        elif mode == 'decrypt':
-            decrypted_message = f.decrypt_file(encrypted_message, key)
-            return render_template('csimetrico.html', decrypted_message=decrypted_message, mode=mode)
+        # Verifica si se ha enviado un archivo
+        if 'file' in request.files:
+            file = request.files['file']
+            key = request.form['key']
+            mode = request.form['mode']
+            
+            print(mode)
+            
+            if mode == 'encrypt':
+                encrypted_message = f.encrypt_file(file, key)
+                return send_file("static/temp/archivo_encriptado.gpg", as_attachment=True,download_name="encrypted_message.gpg", mimetype="application/text")
+            elif mode == 'decrypt':
+                print('got here')
+                decrypted_message = f.decrypt_file(file, key)
+                return send_file("static/temp/archivo_desencriptado.txt", as_attachment=True,download_name="decrypted_message.txt", mimetype="application/text")
 
     return render_template("csimetrico.html")
+
 
 @app.route("/casimetrico/")
 def casimetrico():
