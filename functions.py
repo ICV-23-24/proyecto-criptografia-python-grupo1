@@ -39,37 +39,3 @@ def decrypt_file(file, key):
 
     # Devuelve el contenido desencriptado
     return decrypted_data
-
-# Ejemplo de uso:
-# encrypt_file("archivo_original.txt", "tu_clave_secreta")
-# decrypt_file("archivo_encriptado.txt", "tu_clave_secreta")
-
-
-# def AES(file_name, encryption_key):
-#     # Nombre del archivo
-#     file_name = "archivo.txt"
-
-#     # Lee el contenido del archivo
-#     with open(file_name, 'r') as file:
-#         original_data = file.read()
-
-#     # Define una clave
-#     encryption_key = "1234"
-
-#     # Encripta el contenido del archivo
-#     encrypted_data = encrypt_message(original_data, encryption_key)
-
-#     # Guarda el archivo encriptado
-#     with open("archivo_encriptado.txt", 'w') as encrypted_file:
-#         encrypted_file.write(encrypted_data)
-
-# def DES(encryption_key2):
-#     # Desencripta el archivo encriptado
-#     with open("archivo_encriptado.txt", 'r') as encrypted_file2:
-#         encrypted_data2 = encrypted_file2.read()
-
-#     decrypted_data = decrypt_message(encrypted_data2, encryption_key2)
-
-#     # Guarda el archivo desencriptado
-#     with open("archivo_desencriptado.txt", 'w') as decrypted_file:
-#         decrypted_file.write(decrypted_data)
