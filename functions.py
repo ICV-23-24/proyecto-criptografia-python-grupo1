@@ -18,7 +18,7 @@ def encrypt_file(file, key):
     with open("static/temp/archivo_encriptado.gpg", 'w') as encrypted_file:
         encrypted_file.write(encrypted_data)
     
-    return encrypted_file.read()
+    return 1
 
 def decrypt_file(file, key):
     key = key.encode('utf-8')
