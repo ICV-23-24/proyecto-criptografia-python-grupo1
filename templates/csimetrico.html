@@ -7,6 +7,14 @@ C. Simétrico
 
     <h2>Encriptar Mensaje</h2>
     <form method="post" enctype="multipart/form-data">
+        <select id="Cifrados" name="type">
+            <option value="AES">
+                Cifrado AES
+            </option>
+            <option value="ChaCha20">
+                Cifrado ChaCha20
+            </option>
+        </select> <br></br>
         <label for="message">Mensaje:</label><br>
         <input type="file" id="file" name="file"><br><br>
         <label for="key">Clave:</label><br>

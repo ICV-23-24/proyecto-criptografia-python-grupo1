@@ -19,11 +19,12 @@ def csimetrico():
             file = request.files['file']
             key = request.form['key']
             mode = request.form['mode']
+            type = request.form['type']
             
             print(mode)
             
             if mode == 'encrypt':
-                encrypted_message = f.encrypt_file(file, key)
+                encrypted_message = f.encrypt_file(file, key, type)
                 return send_file("static/temp/archivo_encriptado.gpg", as_attachment=True,download_name="encrypted_message.gpg", mimetype="application/text")
             elif mode == 'decrypt':
                 print('got here')
