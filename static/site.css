@@ -65,3 +65,9 @@ footer {
 .task-item {
     margin-bottom: 5px;
 }
+
+
+#chacha20 {
+    display: none;
+    color: red;
+}
