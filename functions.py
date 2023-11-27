@@ -1,4 +1,4 @@
-from Crypto.Cipher import AES, ChaCha20
+from Crypto.Cipher import AES, DES
 from Crypto.Util.Padding import pad, unpad
 from base64 import b64encode, b64decode
 
@@ -26,46 +26,57 @@ def encrypt_file(file, key, type):
         with open("static/temp/archivo_encriptado.gpg", 'w') as encrypted_file:
             encrypted_file.write(encrypted_data)
     
-    elif type == "ChaCha20" and len(key) != 32:
-        print("Cifra con ChaCha20")
-        
-        # Crea un objeto ChaCha20 en modo de cifrado
-        cipher = ChaCha20.new(key=key)
-        
-        # Realiza el relleno del mensaje
-        padded_data = pad(original_data, 64)
-        # Cifra el mensaje
-        encrypted_data = cipher.encrypt(padded_data)
-        ct = b64encode(encrypted_data).decode('utf-8')
-        
-        
-        # Guarda el archivo encriptado
-        with open("static/temp/archivo_encriptado.gpg", 'w') as encrypted_file:
-            encrypted_file.write(ct)
-        
-    else:
-        print("La clave para ChaCha20 debe tener 32 bytes.")
+    elif type == "DES":
+        print("Cifra con DES")
+        key = key[:8].ljust(8, b'\0')
     
+        cipher = DES.new(key, DES.MODE_OFB)
+
+        original_data = original_data.ljust(len(original_data) + (8 - len(original_data) % 8) % 8, b'\0')
+        
+        msg = cipher.iv + cipher.encrypt(original_data)
     
+        with open("static/temp/archivo_encriptado.gpg", 'wb') as encrypted_file:
+            encrypted_file.write(msg)
     
     return 1
 
-def decrypt_file(file, key):
+def decrypt_file(file, key, type):
     key = key.encode('utf-8')
+    
 
-    # Lee el contenido del archivo encriptado
-    encrypted_data = file.stream.read()
+    if type == "AES":
+        print("Cifra con AES")
+        # Lee el contenido del archivo encriptado
+        encrypted_data = file.stream.read()
+        
+        # Crea un objeto AES en modo ECB con la clave proporcionada y realiza el relleno del mensaje.
+        cipher = AES.new(pad(key, AES.block_size), AES.MODE_ECB)
 
-    # Crea un objeto AES en modo ECB con la clave proporcionada y realiza el relleno del mensaje.
-    cipher = AES.new(pad(key, AES.block_size), AES.MODE_ECB)
+        # Desencripta el contenido del archivo y realiza el despad (elimina el relleno).
+        decrypted_data = unpad(cipher.decrypt(b64decode(encrypted_data)), AES.block_size).decode('utf-8')
 
-    # Desencripta el contenido del archivo y realiza el despad (elimina el relleno).
-    decrypted_data = unpad(cipher.decrypt(b64decode(encrypted_data)), AES.block_size).decode('utf-8')
+        # Guarda el archivo desencriptado
+        decrypted_file_path = "static/temp/archivo_desencriptado.txt"
+        with open(decrypted_file_path, 'w') as decrypted_file:
+            decrypted_file.write(decrypted_data)
 
-    # Guarda el archivo desencriptado
-    decrypted_file_path = "static/temp/archivo_desencriptado.txt"
-    with open(decrypted_file_path, 'w') as decrypted_file:
-        decrypted_file.write(decrypted_data)
-
+    elif type == "DES":
+        
+        key = key[:8].ljust(8, b'\0')
+        
+        cipher = DES.new(key, DES.MODE_OFB)
+        
+        ciphertext = file.read()
+        
+        decrypted_text = cipher.decrypt(ciphertext)
+        
+        decrypted_text = decrypted_text.rstrip(b'\0')
+        
+        decrypted_int = int.from_bytes(decrypted_text, byteorder='big')
+        
+        with open("static/temp/archivo_desencriptado.txt", 'wb') as decrypted_file:
+            decrypted_bytes = decrypted_int.to_bytes((decrypted_int.bit_length() + 7) // 8, byteorder='big')
+            decrypted_file.write(decrypted_bytes)
     # Devuelve el contenido desencriptado
-    return decrypted_data
+    return 1

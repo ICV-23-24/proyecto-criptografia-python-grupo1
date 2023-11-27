@@ -28,7 +28,7 @@ def csimetrico():
                 return send_file("static/temp/archivo_encriptado.gpg", as_attachment=True,download_name="encrypted_message.gpg", mimetype="application/text")
             elif mode == 'decrypt':
                 print('got here')
-                decrypted_message = f.decrypt_file(file, key)
+                decrypted_message = f.decrypt_file(file, key, type)
                 return send_file("static/temp/archivo_desencriptado.txt", as_attachment=True,download_name="decrypted_message.txt", mimetype="application/text")
 
     return render_template("csimetrico.html")

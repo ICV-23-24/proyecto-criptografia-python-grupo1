@@ -11,11 +11,10 @@ C. Simétrico
             <option value="AES">
                 Cifrado AES
             </option>
-            <option value="ChaCha20" id="chachaoption">
-                Cifrado ChaCha20
+            <option value="DES" id="DES">
+                Cifrado DES
             </option>
         </select> <br></br>
-        <h6 id="chacha20">La contraseña debe tener 32 caracteres para que funcione.</h6>
         <label for="message">Mensaje:</label><br>
         <input type="file" id="file" name="file"><br><br>
         <label for="key">Clave:</label><br>
@@ -26,6 +25,14 @@ C. Simétrico
 
     <h2>Desencriptar Mensaje</h2>
     <form method="post" enctype="multipart/form-data">
+        <select id="Cifrados" name="type">
+            <option value="AES">
+                Cifrado AES
+            </option>
+            <option value="DES" id="DES">
+                Cifrado DES
+            </option>
+        </select> <br></br>
         <label for="encrypted_message">Mensaje Encriptado:</label><br>
         <input type="file" id="file" name="file"><br><br>
         <label for="key_decrypt">Clave:</label><br>
@@ -34,18 +41,5 @@ C. Simétrico
         <input type="submit" value="Desencriptar">
     </form>
 
-    <script>
-        window.onload = function () {
-            var chachaOption = document.getElementById("Cifrados");
-            var chachaMessage = document.getElementById("chacha20");
-
-            chachaOption.addEventListener("change", function () {
-                if (chachaOption.value === "ChaCha20") {
-                    chachaMessage.style.display = "block";
-                } else {
-                    chachaMessage.style.display = "none";
-                }
-            });
-        };
-    </script>
+    
 {% endblock %}
