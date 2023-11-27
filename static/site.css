@@ -92,3 +92,7 @@ footer {
 .uploader{
     border-left: black solid 1px;
 }
+
+.type{
+    border: 0px;
+}
