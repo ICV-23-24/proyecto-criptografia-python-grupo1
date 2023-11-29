@@ -3,5 +3,22 @@
 Documentación
 {% endblock %}
 {% block content %}
-<p>Esta página contendrá la documentación para el buen uso de la aplicación web</p>
+
+<section>
+    <h2>Documento</h2>
+    <p>Aquí puedes visualizar nuestro documento en formato PDF:</p>
+    <!-- Agrega un iframe para incrustar el PDF -->
+    <div class="pdf-container">
+        <iframe src="../static/PROYECTO CRIPTOGRAFICO22.pdf" width="100%" height="800px"></iframe>
+    </div>
+</section>
+
+
+<section>
+    <h2>Descarga</h2>
+    <p>Aquí puedes descargar nuestro documento en formato PDF:</p>
+    <!-- Agrega un enlace al PDF -->
+    <a href="../static/PROYECTO CRIPTOGRAFICO22.pdf" target="_blank">Descargar Documento PDF</a>
+</section>
+
 {% endblock %}
