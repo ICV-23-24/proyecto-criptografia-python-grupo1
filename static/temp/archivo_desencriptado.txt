@@ -1,0 +1,30 @@
+AIDA64 Extreme
+BaseX GUI
+Cisco Packet tracer
+CPU-Z
+discord
+driver easy
+epicgame launcher
+firefox
+foxit pdf reader
+git bash
+google chrome
+kaspersky
+libreoffice 
+malwarebytes
+Opera GX
+notepadd++
+virtualbox
+steam
+teamviewer
+userbenchmark
+vs code
+wise memory optimizer
+davinci resolve
+capcut
+dbeaver
+mongodbcompass
+vmware 
+postman
+format factory
+openshot video editor

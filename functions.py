@@ -1,4 +1,6 @@
-from Crypto.Cipher import AES, DES
+from Crypto.Cipher import AES
+from Cryptodome.Cipher import DES
+from Cryptodome.Random import get_random_bytes
 from Crypto.Util.Padding import pad, unpad
 from base64 import b64encode, b64decode
 
@@ -30,15 +32,14 @@ def encrypt_file(file, key, type):
         print("Cifra con DES")
         key = key[:8].ljust(8, b'\0')
     
-        cipher = DES.new(key, DES.MODE_OFB)
+        cipher = DES.new(key, DES.MODE_CFB, iv=get_random_bytes(8))
 
-        original_data = original_data.ljust(len(original_data) + (8 - len(original_data) % 8) % 8, b'\0')
         
-        msg = cipher.iv + cipher.encrypt(original_data)
+        msg = cipher.encrypt(original_data)
     
         with open("static/temp/archivo_encriptado.gpg", 'wb') as encrypted_file:
             # Convierte los bytes a ASCII antes de escribir
-            encrypted_file.write(msg)
+            encrypted_file.write(cipher.iv + msg)
     
     return 1
 
@@ -66,16 +67,11 @@ def decrypt_file(file, key, type):
         
         key = key[:8].ljust(8, b'\0')
         
-        cipher = DES.new(key, DES.MODE_OFB)
+        cipher = DES.new(key, DES.MODE_CFB, iv=file.read(8))
         
         ciphertext = file.read()
         
-        decrypted_text = cipher.decrypt(ciphertext)
-        
-        decrypted_text = decrypted_text.rstrip(b'\0')
-        
-        
-        # decrypted_ascii = decrypted_text.decode('utf-8')
+        decrypted_text = cipher.decrypt(ciphertext)     
         
         with open("static/temp/archivo_desencriptado.txt", 'wb') as decrypted_file:
             # Convierte los bytes a ASCII antes de escribir
