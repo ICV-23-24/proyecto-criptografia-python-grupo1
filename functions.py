@@ -37,6 +37,7 @@ def encrypt_file(file, key, type):
         msg = cipher.iv + cipher.encrypt(original_data)
     
         with open("static/temp/archivo_encriptado.gpg", 'wb') as encrypted_file:
+            # Convierte los bytes a ASCII antes de escribir
             encrypted_file.write(msg)
     
     return 1
@@ -73,10 +74,11 @@ def decrypt_file(file, key, type):
         
         decrypted_text = decrypted_text.rstrip(b'\0')
         
-        decrypted_int = int.from_bytes(decrypted_text, byteorder='big')
+        
+        # decrypted_ascii = decrypted_text.decode('utf-8')
         
         with open("static/temp/archivo_desencriptado.txt", 'wb') as decrypted_file:
-            decrypted_bytes = decrypted_int.to_bytes((decrypted_int.bit_length() + 7) // 8, byteorder='big')
-            decrypted_file.write(decrypted_bytes)
+            # Convierte los bytes a ASCII antes de escribir
+            decrypted_file.write(decrypted_text)
     # Devuelve el contenido desencriptado
     return 1
