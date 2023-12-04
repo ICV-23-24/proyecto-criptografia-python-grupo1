@@ -1,3 +1,76 @@
+section.descarga .button  {
+    position: relative;
+    width: 150px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    border: 1px solid #17795E;
+    background-color: #209978;
+    overflow: hidden;
+  }
+  
+  section.descarga .button, .button__icon, .button__text {
+    transition: all 0.3s;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+}
+  
+section.descarga .button .button__text {
+    transform: translateX(22px);
+    color: #fff;
+    font-weight: 600;
+    -webkit-transform: translateX(22px);
+    -moz-transform: translateX(22px);
+    -ms-transform: translateX(22px);
+    -o-transform: translateX(22px);
+}
+  
+section.descarga .button .button__icon {
+    position: absolute;
+    transform: translateX(109px);
+    height: 100%;
+    width: 39px;
+    background-color: #17795E;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-transform: translateX(109px);
+    -moz-transform: translateX(109px);
+    -ms-transform: translateX(109px);
+    -o-transform: translateX(109px);
+}
+  
+section.descarga .button .svg {
+    width: 20px;
+    fill: #fff;
+  }
+  
+  section.descarga .button:hover {
+    background: #17795E;
+  }
+  
+  section.descarga .button:hover .button__text {
+    color: transparent;
+  }
+  
+  section.descarga .button:hover .button__icon {
+    width: 148px;
+    transform: translateX(0);
+  }
+  
+  section.descarga .button:active .button__icon {
+    background-color: #146c54;
+  }
+  
+  section.descarga .button:active {
+    border: 1px solid #146c54;
+  }
+
+
+
 .message {
     font-weight: 600;
     color: blue;
@@ -35,7 +108,7 @@ footer {
     text-align: center;
     padding: 20px;
     margin-top: 20px;
-    border-top: 1px solid #ccc;
+    border-top: 1px solid gray;
 }
 
 .container {
@@ -43,14 +116,16 @@ footer {
     justify-content: space-around;
     flex-wrap: wrap;
     margin: 20px;
+    background-color: gray;
 }
 
  .card {
-    border: 1px solid #ddd;
+    border: 1px solid gray;
     border-radius: 5px;
     padding: 20px;
     margin: 10px;
     width: 300px;
+    background-color: gray;
 } 
 
  .card h2 {
@@ -60,6 +135,7 @@ footer {
 .container {
     margin: 10px;
     text-align: left; /* Centrar los elementos dentro del contenedor */
+    background-color: gray;
 }
 
 /* .card-container {
@@ -105,16 +181,19 @@ background-color: greenyellow;
 .card-container {
     display: flex;
     justify-content: space-around;
+    background-color: gray;
     flex-wrap: wrap;
+    
 }
 
-.card {
+/* .card {
     border: 1px solid #ddd;
     border-radius: 5px;
     padding: 20px;
     margin: 10px;
-    width: 300px; /* O el ancho deseado para cada tarjeta */
-}
+    width: 300px; /* O el ancho deseado para cada tarjeta 
+    background-color: blue;}
+     */
 
 body {
     font-family: 'Arial', sans-serif;
@@ -153,3 +232,12 @@ h1, h2 {
     max-width: 800px; /* Ajusta el ancho máximo según tus necesidades */
     margin: 20px auto; /* Centra el contenedor del PDF */
 }
+
+#textoOculto {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+
+/* deecarga */
