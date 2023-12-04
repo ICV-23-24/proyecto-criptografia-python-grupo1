@@ -1,8 +1,8 @@
-from Crypto.Cipher import AES
+from Cryptodome.Cipher import AES
 from Cryptodome.Cipher import DES
 from Cryptodome.PublicKey import RSA
 from Cryptodome.Random import get_random_bytes
-from Crypto.Util.Padding import pad, unpad
+from Cryptodome.Util.Padding import pad, unpad
 from base64 import b64encode, b64decode
 # Necesario para hacer funcionar la descarga de archivos.
 import os
@@ -113,6 +113,9 @@ def load_keys():
     keys_dir = "static/public_keys"
 
     fileNames = os.listdir(keys_dir)
+    print("Keys are: ")
+    for x in fileNames:
+        print("- " +x)
 
     return fileNames
 

@@ -15,7 +15,6 @@ def home():
 
 @app.route("/csimetrico/", methods=['GET', 'POST'])
 def csimetrico():
-    print(request.method)
     if request.method == 'POST':
         # Verifica si se ha enviado un archivo
         if 'file' in request.files:
@@ -103,13 +102,6 @@ def database():
 
             else:
                 print("File is not allowed in the system")
-
-
-
-                    
-                
-
-        
     # Si se genera una petición GET, significa que la aplicación requiere de obtener una lista string con las claves públicas del servidor
     if request.method == 'GET':
         # Obtiene los nombres de los archivos
@@ -127,8 +119,20 @@ def database():
     return render_template("database.html")
 
 
-@app.route("/casimetrico/")
+@app.route("/casimetrico/", methods=['GET','POST'])
 def casimetrico():
+    print(request.method)
+    # Si se genera una petición GET, significa que la aplicación requiere de obtener una lista string con las claves públicas del servidor
+    if request.method == 'GET':
+        # Obtiene los nombres de los archivos
+        keys = f.load_keys()
+
+        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+            # Si es una solicitud Ajax, devuelve las claves como JSON
+            return jsonify({"claves": keys})
+        else:
+            # Si es una solicitud normal, renderiza la plantilla HTML
+            return render_template("casimetrico.html", claves=keys)
     return render_template("casimetrico.html")
 
 

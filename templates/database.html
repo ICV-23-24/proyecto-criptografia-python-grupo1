@@ -60,6 +60,7 @@ Página Prueba
                 success: function (response) {
                     // Y la respuesta es la adecuada
                     if (response && response.claves && response.claves.length) {
+                        console.log(response.claves);
                         // Vacía el select.
                         $("#downloader").empty();
                         // Carga los nombres de las claves.
