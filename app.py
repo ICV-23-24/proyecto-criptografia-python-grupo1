@@ -138,8 +138,11 @@ def casimetrico():
     if request.method == 'POST':
         mode = request.form['mode']
         if mode == "encrypt":
-            file = request.files['uncryptedFile']
-            keyname = request.form['stored_key']
+            if 'file' in request.files:
+                file = request.files['uncryptedFile']
+                keyname = request.form['stored_key']
+                publickey = request.files['public_key']
+                print(keyname)
         if mode == "decrypt":
             print("a")
 
