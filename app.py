@@ -133,6 +133,18 @@ def casimetrico():
         else:
             # Si es una solicitud normal, renderiza la plantilla HTML
             return render_template("casimetrico.html", claves=keys)
+        
+    # Si se genera una petición POST, eso quiere decir que uno de los formularios, encriptar o desencriptar han sido enviados.
+    if request.method == 'POST':
+        mode = request.form['mode']
+        if mode == "encrypt":
+            file = request.files['uncryptedFile']
+            keyname = request.form['stored_key']
+        if mode == "decrypt":
+            print("a")
+
+
+
     return render_template("casimetrico.html")
 
 

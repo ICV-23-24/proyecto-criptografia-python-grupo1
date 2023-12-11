@@ -84,6 +84,8 @@ def decrypt_file(file, key, type):
             decrypted_file.write(decrypted_text)
     return 1
 
+
+# Función que genera un nuevo par de claves
 def generate_keys():
     # Genera un nuevo par de claves.
     key = RSA.generate(2048)
@@ -107,7 +109,7 @@ def generate_keys():
     with open(privateFile, "w") as file:
         file.write(privateKey.decode("utf-8"))
 
-
+# Función que obtiene los nombres de los archivos de las claves en la base de datos.
 def load_keys():
     #Directiorio de claves
     keys_dir = "static/public_keys"
@@ -119,6 +121,7 @@ def load_keys():
 
     return fileNames
 
+# Función que elimina un archivo dentro de la carpeta static.
 def removeFile(relative_from_static):
     file_path = os.path.join("static",relative_from_static)
     try:
@@ -177,3 +180,15 @@ def isBig(file, maxSize):
         return True
     
     return False
+
+
+# Función de Kevin: encriptar asimétricamente
+def encrypt_file(file, key):
+    print("Esta función encripta el archivo en la variable 'file', utilizando la clave 'key'. ")
+
+
+# Función de kevin: desencriptar asimétricamente.
+def decrypt_file(file, keyFile):
+    print("Esta función desencripta el archivo en la variable 'file', utilizando el archivo de clave privada en la variable 'keyFile'. ")
+
+
