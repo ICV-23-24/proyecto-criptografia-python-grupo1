@@ -137,9 +137,17 @@ def casimetrico():
     # Si se genera una petición POST, eso quiere decir que uno de los formularios, encriptar o desencriptar han sido enviados.
     if request.method == 'POST':
         mode = request.form['mode']
+        print(mode)
         if mode == "encrypt":
-            file = request.files['uncryptedFile']
-            keyname = request.form['stored_key']
+            if 'uncryptedFile' in request.files:
+                print("uncryptedFile found")
+                file = request.files['uncryptedFile']
+                keyname = request.form['stored_key']
+                if 'public_key' in request.files:
+                    print("public key found")
+                    publickey = request.files['public_key']
+
+                print("There is an uncrypted file")
         if mode == "decrypt":
             print("a")
 
