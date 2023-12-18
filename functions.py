@@ -14,4 +14,4 @@ def decrypt_message(message, key):
     key = key.encode('utf-8')
     cipher = AES.new(pad(key, AES.block_size), AES.MODE_ECB)
     decrypted_message = unpad(cipher.decrypt(b64decode(message)), AES.block_size).decode('utf-8')
-    return decrypted_messagecd
+    return decrypted_message
