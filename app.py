@@ -137,12 +137,18 @@ def casimetrico():
     # Si se genera una petición POST, eso quiere decir que uno de los formularios, encriptar o desencriptar han sido enviados.
     if request.method == 'POST':
         mode = request.form['mode']
+        print(mode)
         if mode == "encrypt":
-            if 'file' in request.files:
+            if 'uncryptedFile' in request.files and bool(request.files['uncryptedFile']) : 
+                print("uncryptedFile found")
                 file = request.files['uncryptedFile']
                 keyname = request.form['stored_key']
-                publickey = request.files['public_key']
-                print(keyname)
+                if 'public_key' in request.files and bool(request.files['public_key']):
+                    print("public key found")
+                    publickey = request.files['public_key']
+                    message=f.encryptar_asymetric_key(file,publickey)
+                    print(message)
+                print("There is an uncrypted file")
         if mode == "decrypt":
             print("a")
 
@@ -158,10 +164,6 @@ def about():
 @app.route("/doc/")
 def doc():
     return render_template("doc.html")
-
-
-
-
 
 @app.route("/hello/")
 @app.route("/hello/<name>")

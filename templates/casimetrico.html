@@ -10,7 +10,7 @@ C. Asimétrico
 
 <h3>Encriptación asimétrica</h3>
 
-<form method="post">
+<form method="post" enctype="multipart/form-data">
 
     <select name="stored_key" id="keySelect" disabled>
         <option value="none">
@@ -34,14 +34,18 @@ C. Asimétrico
 
 <h3>Desencriptar asimetriccamente</h3>
 
-<form method="post">
-
+<form method="post" enctype="multipart/form-data">
+    
     <label for="public_key"> Cargar clave privada para desencriptar: </label>
-    <input type="file" name="public_key">
+    <!-- Aqui se carga el archivo de la clave privada -->
+    <input type="file" name="private_key">
     <br>
 
     <label for="uncryptedFile"> Cargar archivo que se desea encriptar: </label>
     <input type="file" name="encryptedFile">
+
+
+
     <input type="hidden" name="mode" value="decrypt">
     <br>
     
