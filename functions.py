@@ -1,4 +1,4 @@
-from Cryptodome.Cipher import AES
+from Cryptodome.Cipher import AES,PKCS1_OAEP
 from Cryptodome.Cipher import DES
 from Cryptodome.PublicKey import RSA
 from Cryptodome.Random import get_random_bytes
@@ -84,8 +84,6 @@ def decrypt_file(file, key, type):
             decrypted_file.write(decrypted_text)
     return 1
 
-
-# Función que genera un nuevo par de claves
 def generate_keys():
     # Genera un nuevo par de claves.
     key = RSA.generate(2048)
@@ -109,7 +107,7 @@ def generate_keys():
     with open(privateFile, "w") as file:
         file.write(privateKey.decode("utf-8"))
 
-# Función que obtiene los nombres de los archivos de las claves en la base de datos.
+
 def load_keys():
     #Directiorio de claves
     keys_dir = "static/public_keys"
@@ -121,7 +119,6 @@ def load_keys():
 
     return fileNames
 
-# Función que elimina un archivo dentro de la carpeta static.
 def removeFile(relative_from_static):
     file_path = os.path.join("static",relative_from_static)
     try:
@@ -182,13 +179,78 @@ def isBig(file, maxSize):
     return False
 
 
-# Función de Kevin: encriptar asimétricamente
-def encrypt_file(file, key):
-    print("Esta función encripta el archivo en la variable 'file', utilizando la clave 'key'. ")
+# Función que encripta un archivo asimétricamente.
+def asymmetric_encrypt_file(file_path, public_key_path):
+    # Lee el contenido del archivo
+    with open(file_path, 'rb') as file:
+        original_data = file.read()
 
+    # Carga la clave pública RSA
+    with open(public_key_path, 'rb') as public_key_file:
+        public_key = RSA.import_key(public_key_file.read())
 
-# Función de kevin: desencriptar asimétricamente.
-def decrypt_file(file, keyFile):
-    print("Esta función desencripta el archivo en la variable 'file', utilizando el archivo de clave privada en la variable 'keyFile'. ")
+    # Crea un objeto para cifrar utilizando el algoritmo PKCS1_OAEP
+    cipher = PKCS1_OAEP.new(public_key)
 
+    # Encripta el contenido del archivo y convierte el resultado a formato base64.
+    encrypted_data = b64encode(cipher.encrypt(original_data)).decode('utf-8')
 
+    # Guarda el archivo encriptado
+    encrypted_file_path = "static/temp/encrypted_file_rsa.gpg"
+    with open(encrypted_file_path, 'w') as encrypted_file:
+        encrypted_file.write(encrypted_data)
+
+    return encrypted_file_path
+
+# Función que desencripta un archivo asimétricamente.
+def asymmetric_decrypt_file(file_path, private_key_path):
+    # Lee el contenido del archivo encriptado
+    with open(file_path, 'r') as encrypted_file:
+        encrypted_data = b64decode(encrypted_file.read())
+
+    # Carga la clave privada RSA
+    with open(private_key_path, 'rb') as private_key_file:
+        private_key = RSA.import_key(private_key_file.read())
+
+    # Crea un objeto para descifrar utilizando el algoritmo PKCS1_OAEP
+    cipher = PKCS1_OAEP.new(private_key)
+
+    # Desencripta el contenido del archivo.
+    decrypted_data = cipher.decrypt(encrypted_data)
+
+    # Guarda el archivo desencriptado
+    decrypted_file_path = "static/temp/decrypted_file_rsa.txt"
+    with open(decrypted_file_path, 'wb') as decrypted_file:
+        decrypted_file.write(decrypted_data)
+
+    return decrypted_file_path
+
+# Ejemplo de generación de claves
+def generate_asymmetric_keys():
+    key = RSA.generate(2048)
+
+    public_key_path = "static/temp/public_key_rsa.pem"
+    private_key_path = "static/temp/private_key_rsa.pem"
+
+    with open(public_key_path, "wb") as public_key_file:
+        public_key_file.write(key.publickey().export_key(format='PEM'))
+
+    with open(private_key_path, "wb") as private_key_file:
+        private_key_file.write(key.export_key(format='PEM'))
+
+# Ejemplo de uso
+# generate_asymmetric_keys()
+# encrypted_file_path = asymmetric_encrypt_file("path/to/your/file.txt", "static/temp/public_key_rsa.pem")
+# decrypted_file_path = asymmetric_decrypt_file(encrypted_file_path, "static/temp/private_key_rsa.pem")
+
+#funcion de encriptar los archivos con una clave publica
+
+def encryptar_asymetric_key(file,clavepublic):
+    print (clavepublic)
+
+    message = file.read()
+    key = RSA.importKey(clavepublic.read())
+
+    cipher = PKCS1_OAEP.new(key)
+    ciphertext = cipher.encrypt(message)
+    return ciphertext
