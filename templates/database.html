@@ -1,0 +1,112 @@
+{% extends "layout.html" %}
+{% block title %}
+Página Prueba
+{% endblock %}
+{% block content %}
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<h1>Aquí puedes cargar y descargar líbremente, claves públicas y privadas.</h1>
+<div class="equally">
+
+    <div class="downloader halft_width inline-block">
+        <h3>Acceso a claves</h3>
+        <form method="post" id="downloadForm">
+            <input type="hidden" name="mode" value="download">
+            <select name="type" class="type" id="disabledType" disabled>
+                <option value="get">Download Key</option>
+                <option value="remove">Remove Key</option>
+            </select>
+            <select id="downloader" name="filename" disabled>
+                <option value="">Example</option>
+            </select>
+            <input type="hidden" name="passwd" id="passwd" value="null">
+            <button type="button" id="disabledSubmit" disabled onclick="askPasswd()"> Submit </button>
+        </form>
+        
+    </div>
+    <div class="uploader halft_width inline-block">
+        <form method="post" id="loadForm" enctype="multipart/form-data">
+            <h3>Carga de claves</h3>
+            <input type="text" placeholder="Key Identifier" name="identifier">
+            <input type="file" name="file" id="">
+            <input type="hidden" name="mode" value="load">
+            <button type="submit"> Cargar Clave</button>
+        </form>
+        
+    </div>
+
+</div>
+
+<h1>No tienes una clave privada ni pública? Genera una aquí.</h1>
+<form method="post" >
+    <input type="hidden" name="mode" value="generate">
+    <button type="submit">Generate New Keys</button>
+</form>
+
+<script>
+    // Función que se ejecuta al cargar el documento, para obtener una lista de los archivos del servidor.
+    $(document).ready(function () {
+        function cargarClaves() {
+            // Realizar la solicitud Ajax a la ruta /database
+            $.ajax({
+                // Tipo GET
+                type: "GET",
+                url: "/database",
+                // Nos aseguramos de que la solicitud sea AJAX.
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                // Si hay respuesta del servidor:
+                success: function (response) {
+                    // Y la respuesta es la adecuada
+                    if (response && response.claves && response.claves.length) {
+                        console.log(response.claves);
+                        // Vacía el select.
+                        $("#downloader").empty();
+                        // Carga los nombres de las claves.
+                        for (var x = 0; x < response.claves.length; x++) {
+                            $("#downloader").append("<option>" + response.claves[x] + "</option>");
+                            $("#downloader").removeAttr("disabled")
+                            $("#disabledType").removeAttr("disabled")
+                            $("#disabledSubmit").removeAttr("disabled")
+                        }
+                    } else {
+                        console.error("La respuesta no tiene la estructura esperada.");
+                    }
+                },
+                error: function (error) {
+                    console.error(error);
+                }
+            });
+
+        }
+
+        // Llamar a la función cargarClaves al cargar la página
+        cargarClaves();
+
+        // Detectar el evento de carga del select
+        $("#downloader").on("load", function () {
+            // Llamar a la función cargarClaves al cambiar el select
+            cargarClaves();
+        });
+
+        // Función que activa el formulario de descarga o borrado de clave, antes de enviar el formulario.
+        // Esto está hecho para que se pueda pedir un dato mediante un prompt.
+        window.askPasswd = function() {
+            var form = document.getElementById("downloadForm");
+            var type = document.getElementById("disabledType").value;
+            if (type === "remove") {
+                var passwd = prompt("Introduzca la contraseña del Administrador");
+                var hiddenPasswd = document.getElementById("passwd");
+                hiddenPasswd.value = passwd;
+            }
+            form.submit();
+        };
+
+
+        
+    });    
+
+</script>
+
+{% endblock %}

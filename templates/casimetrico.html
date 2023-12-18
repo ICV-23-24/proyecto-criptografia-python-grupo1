@@ -1,7 +1,96 @@
 {% extends "layout.html" %}
 {% block title %}
-C. Simétrico
+C. Asimétrico
 {% endblock %}
 {% block content %}
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <p>Funcionalidades de cifrado simétrico</p>
+<p>A continuación, tenemos dos maneras de cifrar asimétrica-mente, podemos acceder al almacén local de llaves, y cifrar con una pública ahí, o podemos cargar el archivo .key que tengamos nosotros, de una clave, pública o privada para poder cifrar.</p>
+
+
+<h3>Encriptación asimétrica</h3>
+
+<form method="post" enctype="multipart/form-data">
+
+    <select name="stored_key" id="keySelect" disabled>
+        <option value="none">
+            Not Use Stored Key
+        </option>
+    </select><br>
+    <label for="public_key"> Cargar clave pública para encripta: </label>
+    <input type="file" name="public_key">
+    <br>
+
+    <label for="uncryptedFile"> Cargar archivo que se desea encriptar: </label>
+    <input type="file" name="uncryptedFile">
+    <input type="hidden" name="mode" value="encrypt">
+    <br>
+
+    <input type="submit" value="submit">
+
+
+</form>
+
+
+<h3>Desencriptar asimetriccamente</h3>
+
+<form method="post" enctype="multipart/form-data">
+    
+    <label for="public_key"> Cargar clave privada para desencriptar: </label>
+    <!-- Aqui se carga el archivo de la clave privada -->
+    <input type="file" name="private_key">
+    <br>
+
+    <label for="uncryptedFile"> Cargar archivo que se desea encriptar: </label>
+    <input type="file" name="encryptedFile">
+
+
+
+    <input type="hidden" name="mode" value="decrypt">
+    <br>
+    
+    <input type="submit" value="submit">
+
+</form>
+
+
+<script>
+
+    // Función que se ejecuta al cargar el documento, para obtener una lista de las claves públicas en la base de datos
+    $(document).ready(function () {
+        console.log("Reload")
+        function cargarClaves(){
+            // Realizar solicitud ajax al servidor
+            $.ajax({
+                type: "GET",
+                url:"/casimetrico",
+                headers:{
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                success: function (response) {
+                    // Si la respuesta es la adecuada
+                    if (response && response.claves && response.claves.length) {
+                        //Carga los nombres de las claves
+                        for (var x = 0; x < response.claves.length; x++) {
+                            console.log(response.claves[x]);
+                            $("#keySelect").append("<option value = '"+response.claves[x]+"''>" + response.claves[x] + "</option>");
+                            $("#keySelect").removeAttr("disabled");
+                        }
+
+                    } else {
+                        console.error("La respuesta no tiene la estructura esperada.");
+                    }
+                },
+                error: function (error) {
+                    console.error(error);
+                }
+            })
+        }
+
+        // Llamar a la función cargarClaves al cargar la página
+        cargarClaves();
+    })
+</script>
+
+
 {% endblock %}

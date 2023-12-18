@@ -4,63 +4,116 @@ Nuestro trabajo{% endblock %}
 {% block content %}
 <h1>Equipo de Desarrollo</h1>
 
-<div class="container">
-    <div class="card">
-        <h2>Miembro 1</h2>
-        <p><strong>Rol: </strong></p>
-        <p><strong>GitHub: </strong></p>
-        <p><strong>Tareas Realizadas:</strong></p>
-        <ul class="task-list">
-            <li class="task-item"><strong>Tarea 1: </strong></li>
-            <li class="task-item">
-                <strong>Fecha de Inicio:</strong> 
-            </li>
-            <li class="task-item">
-                <strong>Horas Dedicadas:</strong> 
-            </li>
-            <li class="task-item">
-                <strong>Estado:</strong> En Progreso
-            </li>
+<body>
+
+<div class="card-container">
+    <div class="card" style="width: 18rem;">
+        <h2>Kevin Acuña Paredes</h2>
+        <img src="../static/imagendepprueba.jpg" class="card-img-top" alt="Imagendepurbamartin">
+        <div class="card-body">
+        <h5 class="card-title">PROGRAMADOR</h5>
+        <ul class="card-text textoOculto" style="display: none;">
+            <p>rol : programador</p>
+            <p>rol: dd</p>
+            <p>abs</p>
         </ul>
+        <button class="btn btn-primary" onclick="toggleTexto(this)">Más</button>
+        </div>
     </div>
 
-    <div class="card">
-        <h2>Miembro 2</h2>
-        <p><strong>Rol: </strong></p>
-        <p><strong>GitHub: </strong></p>
-        <p><strong>Tareas Realizadas:</strong></p>
-        <ul class="task-list">
-            <li class="task-item"><strong>Tarea 1: </strong></li>
-            <li class="task-item">
-                <strong>Fecha de Inicio:</strong> 
-            </li>
-            <li class="task-item">
-                <strong>Horas Dedicadas:</strong> 
-            </li>
-            <li class="task-item">
-                <strong>Estado:</strong> Completado
-            </li>
+
+    <div class="card" style="width: 18rem;">
+        <h2> AMykhaylov Krutkova, Oleksandr</h2>
+        <img src="../static/imagendepprueba.jpg" class="card-img-top" alt="Imagendepurbamartin">
+        <div class="card-body">
+        <h5 class="card-title">PROGRAMADOR</h5>
+        <ul class="card-text textoOculto" style="display: none;">
+            <p>rol : programador</p>
+            <p>rol: dd</p>
+            <p>abs</p>
         </ul>
+        <button class="btn btn-primary" onclick="toggleTexto(this)">Más</button>
+        </div>
     </div>
 
-    <div class="card">
-        <h2>Miembro 3</h2>
-        <p><strong>Rol: </strong></p>
-        <p><strong>GitHub: </strong></p>
-        <p><strong>Tareas Realizadas:</strong></p>
-        <ul class="task-list">
-            <li class="task-item"><strong>Tarea 1: </strong></li>
-            <li class="task-item">
-                <strong>Fecha de Inicio:</strong> 
-            </li>
-            <li class="task-item">
-                <strong>Horas Dedicadas:</strong> 
-            </li>
-            <li class="task-item">
-                <strong>Estado:</strong> En Progreso
-            </li>
+
+    <div class="card" style="width: 18rem;">
+        <h2>Martín José Morata García  </h2>
+        <img src="../static/imagendepprueba.jpg" class="card-img-top" alt="Imagendepurbamartin">
+        <div class="card-body">
+        <h5 class="card-title">PROGRAMADOR</h5>
+        <ul class="card-text textoOculto" style="display: none;">
+            <p>rol : programador</p>
+            <p>rol: dd</p>
+            <p>abs</p>
         </ul>
+        <button class="btn btn-primary" onclick="toggleTexto(this)">Más</button>
+        </div>
     </div>
 </div>
 
+<script>
+    function toggleTexto(button) {
+        const cardBody = button.parentElement;
+        const textoOculto = cardBody.querySelector('.textoOculto');
+        const buttonText = button.textContent.trim();
+
+        if (buttonText === 'Más') {
+            textoOculto.style.display = 'block';
+            button.textContent = 'Menos';
+        } else {
+            textoOculto.style.display = 'none';
+            button.textContent = 'Más';
+        }
+    }
+</script>
+
+</body>
+</html>
+
+<!-- <div class="container">
+    <div class="card-container">
+        <div class="card">
+        <h2>Martín José Morata García </h2>
+        <p><strong>Rol: Líder del Grupo de Trabajo</strong></p>
+        <p><strong>GitHub:</strong> <a href="https://github.com/ICV-23-24/proyecto-criptografia-python-grupo1">grupo1</a></p>
+        <p><strong>Tareas Realizadas:</strong></p>
+            <ul class="task-list">
+            <li class="task-item"><strong>Tarea 1: </strong></li>
+            <li class="task-item">
+                <strong>Fecha de Inicio:</strong> 
+            </li>
+            <li class="task-item">
+                <strong>Horas Dedicadas:</strong> 
+            </li>
+            <li class="task-item">
+                <strong>Estado:</strong> En Progreso
+            </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="card-container">
+        <div class="card">
+        <h2>AMykhaylov Krutkova, Oleksandr</h2>
+        <p><strong>Rol: Líder del Grupo de Trabajo</strong></p>
+        <p><strong>GitHub:</strong> <a href="https://github.com/ICV-23-24/proyecto-criptografia-python-grupo1">grupo1</a></p>
+        <p><strong>Tareas Realizadas:</strong></p>
+            <ul class="task-list">
+            <li class="task-item"><strong>Tarea 1: </strong></li>
+            <li class="task-item">
+                <strong>Fecha de Inicio:</strong> 
+            </li>
+            <li class="task-item">
+                <strong>Horas Dedicadas:</strong> 
+            </li>
+            <li class="task-item">
+                <strong>Estado:</strong> En Progreso
+            </li>
+            </ul>
+        </div>
+    </div>
+</div> -->
     {% endblock %}

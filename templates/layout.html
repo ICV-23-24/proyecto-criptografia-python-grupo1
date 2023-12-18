@@ -4,6 +4,8 @@
         <meta charset="utf-8" />
         <title>{% block title %}{% endblock %}</title>
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='site.css')}}" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     </head>
 
     <body>
@@ -14,7 +16,7 @@
                 <a href="{{ url_for('casimetrico') }}" class="navbar-item">C. Asimétrico</a>
                 <a href="{{ url_for('about') }}" class="navbar-item">Nuestro Equipo</a>
                 <a href="{{ url_for('doc') }}" class="navbar-item">Documentación</a>
-                <a href="{{ url_for('otro') }}" class="navbar-item">Otro</a>
+                <a href="{{ url_for('database') }}" class="navbar-item">Claves Publicas</a>
             </nav>
         </header>
 
